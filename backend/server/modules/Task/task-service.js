@@ -27,7 +27,7 @@ const getTaskById = async (id) => {
 const updateTask = async ({ id, title, description, status }) => {
   const payload = {
     ...(title && { title }),
-    ...(description && { description }),
+    description,
     ...(status && { status }),
   };
 
