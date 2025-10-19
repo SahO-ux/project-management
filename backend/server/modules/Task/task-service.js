@@ -9,7 +9,7 @@ const createTask = async ({ projectId, title, description, status }) => {
     ...(status && { status }),
   };
 
-  const task = models.Task.create(payload);
+  const task = await models.Task.create(payload);
   invalidateProjectSummaryCache(task?.projectId);
   return task;
 };
@@ -32,7 +32,7 @@ const updateTask = async ({ id, title, description, status }) => {
   };
 
   // if (!Object.keys(payload).length) return; // Nothing to update
-  const updatedTask = models.Task.findOneAndUpdate(
+  const updatedTask = await models.Task.findOneAndUpdate(
     { _id: id, isDeleted: false },
     payload,
     {
@@ -45,7 +45,7 @@ const updateTask = async ({ id, title, description, status }) => {
 };
 
 const deleteTask = async (id) => {
-  const deletedTask = models.Task.findByIdAndUpdate(
+  const deletedTask = await models.Task.findByIdAndUpdate(
     id,
     { isDeleted: true },
     { new: true }
