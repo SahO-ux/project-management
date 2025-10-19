@@ -3,19 +3,21 @@ import { models } from "../../modules-loader.js";
 
 const createProject = async ({ name, description, columns }) => {
   const payload = { name, description, columns };
-  return models.Project.create(payload);
+  return await models.Project.create(payload);
 };
 
 const getAllProjects = async () => {
-  return models.Project.find({ isDeleted: false }).sort({ createdAt: -1 });
+  return await models.Project.find({ isDeleted: false }).sort({
+    createdAt: -1,
+  });
 };
 
 const getProjectById = async (id) => {
-  return models.Project.findOne({ _id: id, isDeleted: false });
+  return await models.Project.findOne({ _id: id, isDeleted: false });
 };
 
-const updateProject = ({ id, data }) => {
-  const updateProject = models.Project.findOneAndUpdate(
+const updateProject = async ({ id, data }) => {
+  const updateProject = await models.Project.findOneAndUpdate(
     { _id: id, isDeleted: false },
     data,
     {

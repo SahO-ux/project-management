@@ -48,7 +48,7 @@ const updateProject = async (req, res) => {
 
     const updatedProject = await services.ProjectService.updateProject({
       id: req.params.id,
-      payload,
+      data: payload,
     });
     res.json(updatedProject);
   } catch (err) {

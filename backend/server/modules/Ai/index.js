@@ -14,13 +14,13 @@ const router = express.Router();
 router.use(aiRateLimiter);
 
 router.post(
-  "/summarize",
+  "/summarize/:projectId",
   validateSummarizeParams,
   controllers.AiController.summarizeProject
 );
 
 router.post(
-  "/question",
+  "/question/:projectId",
   validateQuestionParams,
   controllers.AiController.askProjectQuestion
 );
