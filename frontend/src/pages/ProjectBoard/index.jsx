@@ -7,6 +7,7 @@ import {
   useSensor,
   useSensors,
   useDroppable,
+  TouchSensor,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -81,6 +82,10 @@ export default function ProjectBoard({ project }) {
   }, [project]);
 
   const sensors = useSensors(
+    useSensor(TouchSensor, {
+      // small delay helps distinguish scroll vs drag on phones
+      activationConstraint: { delay: 150, tolerance: 5 },
+    }),
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
 

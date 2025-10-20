@@ -9,6 +9,10 @@ export default function SortableTask({ id, task, onEdit, onDelete }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    // important for touch devices: prevent browser from hijacking touch gesture as scroll
+    touchAction: "none",
+    // optionally also cursor for desktop
+    cursor: "grab",
   };
 
   if (!task) return null;
@@ -34,12 +38,16 @@ export default function SortableTask({ id, task, onEdit, onDelete }) {
           <button
             onClick={() => onEdit(task)}
             className="text-sm text-indigo-600"
+            onPointerDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(task._id)}
             className="text-sm text-red-500"
+            onPointerDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           >
             Delete
           </button>
