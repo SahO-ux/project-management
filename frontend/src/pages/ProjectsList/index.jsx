@@ -11,6 +11,7 @@ export default function ProjectsList({
   onCreate,
   onUpdate,
   onDelete,
+  fetchProjects,
 }) {
   // unified modal state
   const [modalState, setModalState] = useState({
@@ -40,7 +41,7 @@ export default function ProjectsList({
       onDelete?.(id);
     } catch (err) {
       console.error(err);
-      errorToast(err.response?.data?.error || "Failed to delete project");
+      errorToast(err.response?.data?.message || "Failed to delete project");
     }
   };
 
@@ -66,7 +67,20 @@ export default function ProjectsList({
           >
             <div>
               <div className="font-semibold">{p.name}</div>
-              <div className="text-xs text-gray-500 truncate w-44">
+              {/* <div className="text-xs text-gray-500 truncate w-44">
+                {p.description}
+              </div> */}
+              <div
+                className="text-xs text-gray-500"
+                title={p.description || ""}
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
                 {p.description}
               </div>
               <div className="text-xs text-gray-400 mt-1">
@@ -102,6 +116,7 @@ export default function ProjectsList({
         mode={modalState.mode}
         project={modalState.project}
         onHide={closeModal}
+        fetchProjects={fetchProjects}
         onSaved={(proj) => {
           if (modalState.mode === "create") {
             onCreate?.(proj);

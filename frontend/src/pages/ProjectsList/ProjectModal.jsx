@@ -10,6 +10,7 @@ export default function ProjectModal({
   project = null,
   onHide,
   onSaved,
+  fetchProjects,
 }) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -51,11 +52,14 @@ export default function ProjectModal({
     } catch (err) {
       console.error(err);
       errorToast(
-        err.response?.data?.error ||
-          (mode === "create"
-            ? "Failed to create project"
-            : "Failed to update project")
+        err.response?.data?.message ||
+          `Failed to ${mode === "edit" ? "edit" : "create"} project`
       );
+
+      if (mode === "edit") {
+        onHide();
+        await fetchProjects();
+      }
     } finally {
       setLoading(false);
     }

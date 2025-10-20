@@ -53,6 +53,11 @@ const updateTask = async (req, res) => {
       description,
       status,
     });
+    if (!updatedTask)
+      return res.status(400).json({
+        message: `Task does not exist, it is already deleted`,
+      });
+
     res.json(updatedTask);
   } catch (err) {
     console.error("updateTask error:", err.message);

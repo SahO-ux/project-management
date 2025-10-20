@@ -50,6 +50,12 @@ const updateProject = async (req, res) => {
       id: req.params.id,
       data: payload,
     });
+
+    if (!updatedProject)
+      return res.status(400).json({
+        message: `Project does not exist, it is already deleted`,
+      });
+
     res.json(updatedProject);
   } catch (err) {
     console.error("updateProject error:", err.message);

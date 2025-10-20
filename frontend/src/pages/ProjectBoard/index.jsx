@@ -145,7 +145,7 @@ export default function ProjectBoard({ project }) {
       updateTaskLocally(updatedTask);
     } catch (err) {
       console.error(err);
-      errorToast(err.response?.data?.error || "Failed to move task");
+      errorToast(err.response?.data?.message || "Failed to move task");
       await loadTasks(); // rollback
     }
   };
@@ -325,6 +325,7 @@ export default function ProjectBoard({ project }) {
         defaultColumn={taskModal.columnId}
         projectId={project._id}
         onHide={closeTaskModal}
+        loadTasks={loadTasks}
         insertTaskLocally={insertTaskLocally}
         updateTaskLocally={updateTaskLocally}
       />

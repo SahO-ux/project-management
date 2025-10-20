@@ -13,6 +13,7 @@ export default function TaskModal({
   defaultColumn = "todo",
   insertTaskLocally,
   updateTaskLocally,
+  loadTasks,
 }) {
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
@@ -51,7 +52,14 @@ export default function TaskModal({
       onHide();
     } catch (err) {
       console.error(err);
-      errorToast(err.response?.data?.error || "Failed to save task");
+      errorToast(
+        err.response?.data?.message ||
+          `Failed to ${mode === "edit" ? "edit" : "save"} task`
+      );
+      if (mode === "edit") {
+        onHide();
+        await loadTasks(); // rollback
+      }
     } finally {
       setLoading(false);
     }
