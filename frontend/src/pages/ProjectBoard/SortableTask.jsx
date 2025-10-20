@@ -23,7 +23,9 @@ export default function SortableTask({ id, task, onEdit, onDelete }) {
       <div className="flex justify-between items-start gap-2">
         <div>
           <div className="font-medium">{task.title}</div>
-          <div className="text-xs text-gray-500">{task.description}</div>
+          <div className="text-xs text-gray-500 text-truncate w-44">
+            {task.description}
+          </div>
           <div className="text-xs text-gray-400 mt-1">
             Updated: {new Date(task.updatedAt).toLocaleString()}
           </div>

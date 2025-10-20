@@ -12,12 +12,13 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { Button } from "react-bootstrap";
 
 import SortableTask from "./SortableTask";
-import AIPanel from "../../ui/AIPanel";
 import { successToast, errorToast } from "../../lib/toast";
 import TaskModal from "./TaskModal";
 import { deleteTask, getTasksByProject, updateTask } from "./actions";
+import AIAssistModal from "./AIAssistModal";
 
 /**
  * ColumnDroppable: minimal wrapper to register a column as droppable.
@@ -46,9 +47,10 @@ export default function ProjectBoard({ project }) {
     columnId: null,
   });
 
+  const [showAIModal, setShowAIModal] = useState(false);
+
   const loadTasks = async () => {
     setLoading(true);
-
     try {
       const list = await getTasksByProject(project._id);
       const map = {};
@@ -56,7 +58,7 @@ export default function ProjectBoard({ project }) {
       setTasksMap(map);
 
       const cols = {};
-      project.columns.forEach((c) => {
+      (project.columns || []).forEach((c) => {
         cols[c.key] = { id: c.key, title: c.title, taskIds: [] };
       });
       list.forEach((t) => {
@@ -75,6 +77,7 @@ export default function ProjectBoard({ project }) {
 
   useEffect(() => {
     loadTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [project]);
 
   const sensors = useSensors(
@@ -139,7 +142,6 @@ export default function ProjectBoard({ project }) {
     try {
       const updatedTask = await updateTask(taskId, { status: targetColId });
       successToast("Task moved");
-      // reconcile authoritative server result
       updateTaskLocally(updatedTask);
     } catch (err) {
       console.error(err);
@@ -188,7 +190,7 @@ export default function ProjectBoard({ project }) {
           title: task.status,
           taskIds: [],
         };
-      // add to top (or bottom as you prefer)
+      // add to top or bottom
       next[task.status] = {
         ...next[task.status],
         taskIds: [task._id, ...next[task.status].taskIds],
@@ -233,10 +235,7 @@ export default function ProjectBoard({ project }) {
     try {
       await deleteTask(taskId);
       successToast("Task deleted");
-      // delete locally using known id (don't rely on API response shape)
       deleteTaskLocally(taskId);
-      // await loadTasks();
-      // onProjectUpdate?.();
     } catch (err) {
       console.error(err);
       errorToast("Failed to delete task");
@@ -245,12 +244,25 @@ export default function ProjectBoard({ project }) {
 
   return (
     <div>
+      {/* Header + AI trigger */}
       <div className="flex items-start justify-between mb-4">
         <div>
           <h2 className="text-lg font-semibold">{project.name}</h2>
-          <p className="text-sm text-gray-500">{project.description}</p>
+          <p className="text-sm text-gray-500 text-truncate w-44">
+            {project.description}
+          </p>
         </div>
-        <AIPanel projectId={project._id} />
+
+        {/* AI button now opens a responsive modal */}
+        <div>
+          <Button
+            variant="primary"
+            onClick={() => setShowAIModal(true)}
+            className="bg-indigo-600 border-indigo-600"
+          >
+            AI Assist
+          </Button>
+        </div>
       </div>
 
       {loading ? (
@@ -299,6 +311,12 @@ export default function ProjectBoard({ project }) {
           </div>
         </DndContext>
       )}
+
+      <AIAssistModal
+        show={showAIModal}
+        onHide={() => setShowAIModal(false)}
+        project={project}
+      />
 
       <TaskModal
         show={taskModal.show}

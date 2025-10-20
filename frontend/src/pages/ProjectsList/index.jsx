@@ -66,7 +66,9 @@ export default function ProjectsList({
           >
             <div>
               <div className="font-semibold">{p.name}</div>
-              <div className="text-xs text-gray-500">{p.description}</div>
+              <div className="text-xs text-gray-500 truncate w-44">
+                {p.description}
+              </div>
               <div className="text-xs text-gray-400 mt-1">
                 Created: {new Date(p.createdAt).toLocaleString()}
               </div>
