@@ -20,7 +20,7 @@ const setupMiddleware = (app) => {
 setupMiddleware(app);
 
 // -------------------- Health Test Route --------------------
-app.get("/", (req, res) => res.json("Hello"));
+app.get("/health", (req, res) => res.json("Hello"));
 
 // -------------------- Server Startup --------------------
 const startServer = async () => {
