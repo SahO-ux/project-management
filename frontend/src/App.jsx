@@ -57,7 +57,6 @@ export default function App() {
           currSelected &&
           !list.find((p) => String(p._id) === String(currSelected._id))
         ) {
-          console.log({ currSelected });
           return list.length ? list[0] : null;
         }
 
