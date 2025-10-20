@@ -3,6 +3,8 @@
 A full-stack **Project Management Dashboard** built using **React (Vite)**, **Node.js**, **Express**, and **MongoDB**, featuring **AI-powered summarization** and task insights.  
 The app allows users to create projects, manage tasks through Kanban boards, and get instant summaries using an integrated AI assistant.
 
+- Deployed URL:- https://project-management-frontend-omega.vercel.app/
+
 ---
 
 ## 🚀 Features
@@ -12,7 +14,6 @@ The app allows users to create projects, manage tasks through Kanban boards, and
 - **Interactive Dashboard:** Modern UI with animations and responsive layout.  
 - **Task & Project CRUD:** Add, update, delete, and view projects and tasks.  
 - **Backend Caching (NodeCache):** Improves performance of frequent summarization requests.  
-- **Fully Responsive:** Works seamlessly across desktop, tablet, and mobile.
 
 ---
 
@@ -30,7 +31,7 @@ The app allows users to create projects, manage tasks through Kanban boards, and
 - Express.js  
 - MongoDB + Mongoose  
 - NodeCache  
-- OpenAI API (for summarization)  
+- GEMINI library (for summarization)  
 
 ---
 
