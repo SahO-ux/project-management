@@ -29,7 +29,7 @@ The app allows users to create projects, manage tasks through Kanban boards, and
 - Express.js  
 - MongoDB + Mongoose  
 - NodeCache  
-- OpenAI API (for summarization)  
+- GEMINI library (for summarization)  
 
 ---
 
