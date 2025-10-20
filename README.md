@@ -11,7 +11,6 @@ The app allows users to create projects, manage tasks through Kanban boards, and
 - **AI-Powered Summarization:** Generate concise summaries of project tasks using OpenAI.  
 - **Interactive Dashboard:** Modern UI with animations and responsive layout.  
 - **Task & Project CRUD:** Add, update, delete, and view projects and tasks.  
-- **Real-time Updates:** Optimized API calls and instant UI refresh.  
 - **Backend Caching (NodeCache):** Improves performance of frequent summarization requests.  
 - **Fully Responsive:** Works seamlessly across desktop, tablet, and mobile.
 
