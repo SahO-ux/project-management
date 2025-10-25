@@ -139,7 +139,7 @@ npm start
 ---
 
 ## 📂 Folder Structure
-
+```bash
 project-management/
 │
 ├── backend/
@@ -183,6 +183,7 @@ project-management/
 │   └── tailwind.config.js
 │
 └── README.md
+```
 
 ---
 
